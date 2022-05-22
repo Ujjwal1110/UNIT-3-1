@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:30px;
+            width:80%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar">
+
+    </div>
+    <div id="container"></div>
+</body>
+</html>
+<script>
+    var x=JSON.parse(localStorage.getItem("students"));
+    console.log(x);
+ 
+ display(x);
+ function display(x){
+     x.forEach(function(elem,index){
+     var a=document.createElement("h2");
+     a.innerText=elem.name;
+     var b=document.createElement("h3");
+     b.innerText=elem.batch;
+     var c=document.createElement("h4");
+     c.innerText=elem.course;
+     var d=document.createElement("h5");
+     d.innerText=elem.unit;
+ 
+     var e=document.createElement("img");
+     e.setAttribute("src", elem.image)
+
+     let btn = document.createElement("button");
+    btn.innerText="Remove";
+    btn.addEventListener("click", function () {
+       remove(index);
+    });
+
+     var y=document.createElement("div")
+     y.append(e, a, b, c, d, btn)
+     
+     var z= document.querySelector("#container")
+     z.append(y);
+ 
+
+     });
+
+ }
+
+ function remove(index) {
+    let data= JSON.parse(localStorage.getItem("students")) || [];
+
+    let newData = data.filter(function(elem, i) {
+     if(i===index){
+         let trash=JSON.parse(localStorage.getItem("trash")) || [];
+         trash.push(elem);
+         localStorage.setItem('trash', JSON.stringify(trash));
+     } else {
+         return i !== index;
+     }
+    });
+     localStorage.setItem("students",JSON.stringify(newData));
+     append();
+}
+
+</script>
